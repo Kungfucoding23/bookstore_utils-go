@@ -32,3 +32,12 @@ func TestNewNotFoundError(t *testing.T) {
 	assert.EqualValues(t, "this is the message", err.Message)
 	assert.EqualValues(t, "not_found", err.Error)
 }
+
+func TestNewRestError(t *testing.T) {
+	err := NewRestError("this is the message", http.StatusNotImplemented, "not_implemented", nil)
+	assert.NotNil(t, err)
+	assert.EqualValues(t, http.StatusNotImplemented, err.Status)
+	assert.EqualValues(t, "this is the message", err.Message)
+	assert.EqualValues(t, "not_implemented", err.Error)
+	assert.Nil(t, err.Causes)
+}
