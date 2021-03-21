@@ -12,6 +12,15 @@ type RestErr struct {
 	Causes  []interface{} `json:"causes"`
 }
 
+func NewRestError(message string, status int, err string, causes []interface{}) RestErr {
+	return RestErr{
+		Message: message,
+		Status:  status,
+		Error:   err,
+		Causes:  causes,
+	}
+}
+
 func NewBadRequestError(message string) *RestErr {
 	return &RestErr{
 		Message: message,
