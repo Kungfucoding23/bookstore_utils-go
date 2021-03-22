@@ -49,10 +49,17 @@ func TestNewUnauthorizedError(t *testing.T) {
 	assert.EqualValues(t, "unauthorized", err.Error())
 }
 
-// func TestNewRestErrorFromBytes(t *testing.T) {
-// 	var bytes []byte
-// 	restErr, err := NewRestErrorFromBytes(bytes)
-// 	assert.NotNil(t, err)
-// 	assert.EqualValues(t, http.StatusUnauthorized, err.Status())
-// 	assert.EqualValues(t, "this is the message", err.Message())
-// }
+func TestNewRestErrorFromBytesValidJSON(t *testing.T) {
+	var jsonStr = []byte(`{
+		"id"  : 15,
+		"foo" : { "foo": 123, "bar": "baz" }
+	}`)
+	_, err := NewRestErrorFromBytes(jsonStr)
+	assert.Nil(t, err)
+}
+func TestNewRestErrorFromBytesInvalidJSON(t *testing.T) {
+	var jsonStr = []byte(``)
+	_, err := NewRestErrorFromBytes(jsonStr)
+	assert.NotNil(t, err)
+	assert.EqualValues(t, "invalid json", err.Error())
+}
