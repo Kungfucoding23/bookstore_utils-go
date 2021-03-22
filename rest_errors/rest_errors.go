@@ -3,7 +3,6 @@ package rest_errors
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 )
 
@@ -22,8 +21,7 @@ type restErr struct {
 }
 
 func (e restErr) Error() string {
-	return fmt.Sprintf("message: %s - status: %d - error: %s - causes: %v",
-		e.ErrMessage, e.ErrStatus, e.ErrError, e.ErrCauses)
+	return e.ErrError
 }
 
 func (e restErr) Message() string {
