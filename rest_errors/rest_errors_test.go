@@ -54,12 +54,14 @@ func TestNewRestErrorFromBytesValidJSON(t *testing.T) {
 		"id"  : 15,
 		"foo" : { "foo": 123, "bar": "baz" }
 	}`)
-	_, err := NewRestErrorFromBytes(jsonStr)
+	apiErr, err := NewRestErrorFromBytes(jsonStr)
 	assert.Nil(t, err)
+	assert.NotNil(t, apiErr)
 }
 func TestNewRestErrorFromBytesInvalidJSON(t *testing.T) {
 	var jsonStr = []byte(``)
-	_, err := NewRestErrorFromBytes(jsonStr)
+	apiErr, err := NewRestErrorFromBytes(jsonStr)
 	assert.NotNil(t, err)
+	assert.Nil(t, apiErr)
 	assert.EqualValues(t, "invalid json", err.Error())
 }
